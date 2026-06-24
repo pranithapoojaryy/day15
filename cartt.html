@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EasyBasket Cart | Blinkit-Inspired Grocery</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background: linear-gradient(180deg, #eef7ef 0%, #f9fdf8 100%);
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* Navbar */
+.navbar{
+    background:#ffffff;
+    box-shadow:0 2px 18px rgba(15,58,25,.08);
+}
+
+.navbar-brand{
+    font-size:42px;
+    font-weight:700;
+    color:#198754 !important;
+}
+
+/* Cart Section */
+.cart-section{
+    padding:80px 0;
+}
+
+.section-title{
+    text-align:center;
+    font-size:50px;
+    font-weight:700;
+    margin-bottom:50px;
+}
+
+/* Cart Card */
+.cart-item{
+    background:#fff;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    margin-bottom:25px;
+}
+
+.cart-item img{
+    width:110px;
+    height:110px;
+    object-fit:cover;
+    border-radius:12px;
+}
+
+.cart-item h4{
+    margin-bottom:8px;
+}
+
+.price{
+    color:#198754;
+    font-size:20px;
+}
+
+.quantity-btn{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    border:1px solid #ddd;
+    background:white;
+    font-size:18px;
+}
+
+/* Summary */
+.summary-card{
+    background:#fff;
+    padding:35px;
+    border-radius:24px;
+    border:1px solid #e7f3e8;
+    box-shadow:0 8px 24px rgba(15,58,25,.08);
+}
+
+.summary-card h2{
+    margin-bottom:25px;
+    font-weight:800;
+    color:#174227;
+}
+
+.total{
+    color:#198754;
+    font-size:24px;
+    font-weight:bold;
+}
+
+/* Footer */
+footer{
+    background:#212529;
+    color:white;
+    padding:40px 0;
+    margin-top:60px;
+}
+
+@media(max-width:768px){
+
+    .section-title{
+        font-size:35px;
+    }
+
+    .cart-item{
+        text-align:center;
+    }
+
+    .cart-item img{
+        margin-bottom:15px;
+    }
+
+    .summary-card{
+        margin-top:25px;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+<div class="container">
+
+<a class="navbar-brand" href="index.html">
+EasyBasket
+</a>
+
+<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="menu">
+
+<ul class="navbar-nav ms-auto">
+
+<li class="nav-item">
+<a class="nav-link" href="index.html">Home</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="index.html#categories">Categories</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="index.html#products">Products</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="about.html">About</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="index.html#contact">Contact</a>
+</li>
+
+<li class="nav-item ms-2">
+<a class="btn btn-success" href="cartt.html">
+<i class="fa-solid fa-cart-shopping"></i> Cart <span id="cart-count" class="badge bg-light text-dark ms-2">0</span>
+</a>
+</li>
+
+</ul>
+
+</div>
+</div>
+</nav>
+
+<!-- Cart Section -->
+<section class="cart-section">
+
+<div class="container">
+
+<h2 class="section-title">
+Your Shopping Cart
+</h2>
+
+<div class="row">
+
+<!-- Cart Items -->
+<div class="col-lg-8">
+    <div id="cart-items"></div>
+</div>
+
+<!-- Summary -->
+<div class="col-lg-4">
+
+<div class="summary-card">
+
+<h2>Order Summary</h2>
+
+<div class="d-flex justify-content-between mb-3">
+<span>Subtotal</span>
+<strong id="subtotal-value">Rs. 355</strong>
+</div>
+
+<div class="d-flex justify-content-between mb-3">
+<span>Delivery Fee</span>
+<strong id="delivery-fee-value">Rs. 30</strong>
+</div>
+
+<div class="d-flex justify-content-between mb-3 text-success">
+<span>Discount</span>
+<strong id="discount-value">-Rs. 0</strong>
+</div>
+
+<hr>
+
+<div class="d-flex justify-content-between mb-4">
+<strong>Total</strong>
+<strong id="total-value" class="total">Rs. 385</strong>
+</div>
+
+<input type="text"
+class="form-control mb-3"
+placeholder="Enter coupon code">
+
+<button type="button" class="btn btn-outline-success w-100 mb-3">
+Apply Coupon
+</button>
+<div id="coupon-feedback" class="text-muted small mb-3"></div>
+<button type="button" class="btn btn-success w-100">
+Proceed to Checkout
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+<!-- Footer -->
+<footer>
+<div class="container text-center">
+<p class="mb-0">
+&copy; 2026 EasyBasket. All Rights Reserved.
+</p>
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const CART_KEY = 'easybasketCart';
+
+function getCart() {
+  try {
+    const stored = localStorage.getItem(CART_KEY);
+    const cart = stored ? JSON.parse(stored) : [];
+    return Array.isArray(cart) ? cart : [];
+  } catch {
+    localStorage.removeItem(CART_KEY);
+    return [];
+  }
+}
+
+function saveCart(cart) {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  updateCartCount();
+}
+
+function formatCurrency(amount) {
+  return `Rs. ${amount.toFixed(0)}`;
+}
+
+function parseCurrency(value) {
+  return Number(value.replace(/[^0-9.-]+/g, '')) || 0;
+}
+
+function updateCartCount() {
+  const cartCount = document.getElementById('cart-count');
+  if (!cartCount) return;
+
+  const total = getCart().reduce((sum, item) => sum + item.quantity, 0);
+  cartCount.textContent = total;
+  cartCount.style.display = total > 0 ? 'inline-block' : 'none';
+}
+
+function updateSummary() {
+  const cart = getCart();
+  const deliveryFee = parseCurrency(document.getElementById('delivery-fee-value').textContent);
+  const discountValue = Number(document.getElementById('discount-value').textContent.replace(/[^0-9.-]+/g, '')) || 0;
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  document.getElementById('subtotal-value').textContent = formatCurrency(subtotal);
+  document.getElementById('discount-value').textContent = discountValue === 0 ? '-Rs. 0' : `-Rs. ${Math.abs(discountValue)}`;
+  document.getElementById('total-value').textContent = formatCurrency(subtotal + deliveryFee - Math.abs(discountValue));
+
+  const checkoutButton = document.querySelector('.summary-card .btn-success');
+  const couponButton = document.querySelector('.summary-card .btn-outline-success');
+  const couponInput = document.querySelector('.summary-card input[type="text"]');
+  const isEmpty = cart.length === 0;
+
+  if (checkoutButton) checkoutButton.disabled = isEmpty;
+  if (couponButton) couponButton.disabled = isEmpty;
+  if (couponInput) couponInput.disabled = isEmpty;
+}
+
+function renderCartItems() {
+  const cart = getCart();
+  const container = document.getElementById('cart-items');
+  if (!container) return;
+
+  if (cart.length === 0) {
+    container.innerHTML = '<p class="text-center fs-5 text-muted">Your cart is empty. Add items to continue shopping.</p>';
+    updateSummary();
+    return;
+  }
+
+  container.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="row align-items-center">
+        <div class="col-md-2">
+          <img src="${item.image}" alt="${item.name}">
+        </div>
+        <div class="col-md-4">
+          <h4>${item.name}</h4>
+          <p class="price">Rs. ${item.price}</p>
+        </div>
+        <div class="col-md-3">
+          <div class="d-flex align-items-center justify-content-center">
+            <button type="button" class="quantity-btn" data-action="decrease" data-id="${item.id}">
+              <i class="fa-solid fa-minus"></i>
+            </button>
+            <span class="mx-3 fw-bold quantity-value" data-id="${item.id}">${item.quantity}</span>
+            <button type="button" class="quantity-btn" data-action="increase" data-id="${item.id}">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-2 text-end">
+          <h3 class="text-success item-total">${formatCurrency(item.price * item.quantity)}</h3>
+        </div>
+        <div class="col-md-1 text-end">
+          <button type="button" class="btn btn-outline-danger" data-action="remove" data-id="${item.id}">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  attachCartEvents();
+  updateSummary();
+}
+
+function attachCartEvents() {
+  document.querySelectorAll('[data-action="increase"]').forEach(button => {
+    button.addEventListener('click', () => changeQuantity(button.dataset.id, 1));
+  });
+
+  document.querySelectorAll('[data-action="decrease"]').forEach(button => {
+    button.addEventListener('click', () => changeQuantity(button.dataset.id, -1));
+  });
+
+  document.querySelectorAll('[data-action="remove"]').forEach(button => {
+    button.addEventListener('click', () => removeItem(button.dataset.id));
+  });
+}
+
+function changeQuantity(id, delta) {
+  const cart = getCart();
+  const item = cart.find(product => product.id === id);
+  if (!item) return;
+
+  item.quantity = Math.max(1, item.quantity + delta);
+  saveCart(cart);
+  renderCartItems();
+}
+
+function removeItem(id) {
+  const cart = getCart().filter(item => item.id !== id);
+  saveCart(cart);
+  renderCartItems();
+}
+
+function applyCoupon() {
+  const couponInput = document.querySelector('.summary-card input[type="text"]');
+  const couponFeedback = document.getElementById('coupon-feedback');
+  const couponCode = couponInput.value.trim().toUpperCase();
+  let discount = 0;
+  let message = 'Enter a coupon code to save more.';
+  let messageClass = 'text-muted';
+
+  if (!couponCode) {
+    message = 'Please enter a coupon code.';
+  } else if (couponCode === 'SAVE10') {
+    discount = 10;
+    message = 'Coupon applied: Rs. 10 off.';
+    messageClass = 'text-success';
+  } else if (couponCode === 'EASY50') {
+    discount = 50;
+    message = 'Coupon applied: Rs. 50 off.';
+    messageClass = 'text-success';
+  } else {
+    message = 'Invalid coupon code. Try SAVE10 or EASY50.';
+    messageClass = 'text-danger';
+  }
+
+  document.getElementById('discount-value').textContent = discount === 0 ? '-Rs. 0' : `-Rs. ${discount}`;
+  if (couponFeedback) {
+    couponFeedback.textContent = message;
+    couponFeedback.className = `small mb-3 ${messageClass}`;
+  }
+  updateSummary();
+}
+
+function initCart() {
+  const couponButton = document.querySelector('.summary-card .btn-outline-success');
+  if (couponButton) couponButton.addEventListener('click', applyCoupon);
+
+  renderCartItems();
+  updateCartCount();
+}
+
+document.addEventListener('DOMContentLoaded', initCart);
+</script>
+
+</body>
+</html>
